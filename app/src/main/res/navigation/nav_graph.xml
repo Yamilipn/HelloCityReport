@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listaIncidenciasFragment">
+
+    <fragment
+        android:id="@+id/listaIncidenciasFragment"
+        android:name="com.example.hellocityreport.ui.ListaIncidenciasFragment"
+        android:label="Incidencias">
+        <action
+            android:id="@+id/action_lista_to_detalle"
+            app:destination="@id/detalleIncidenciaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detalleIncidenciaFragment"
+        android:name="com.example.hellocityreport.ui.DetalleIncidenciaFragment"
+        android:label="Detalle">
+        <argument
+            android:name="incidenciaId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>
