@@ -11,7 +11,15 @@
         <action
             android:id="@+id/action_lista_to_detalle"
             app:destination="@id/detalleIncidenciaFragment" />
+        <action
+            android:id="@+id/action_lista_to_nueva"
+            app:destination="@id/nuevaIncidenciaFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nuevaIncidenciaFragment"
+        android:name="com.example.hellocityreport.ui.NuevaIncidenciaFragment"
+        android:label="Nueva incidencia" />
 
     <fragment
         android:id="@+id/detalleIncidenciaFragment"

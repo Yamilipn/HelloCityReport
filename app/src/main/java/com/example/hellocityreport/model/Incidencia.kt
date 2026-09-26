@@ -21,7 +21,7 @@ data class Incidencia(
 
 /** Datos de ejemplo para mostrar la lista dinámica mientras no hay backend. */
 object IncidenciasDummy {
-    val lista: List<Incidencia> = listOf(
+    private val _lista = mutableListOf(
         Incidencia(1, "Bache en Av. Principal", "Bache profundo que dificulta el paso vehicular.", "Av. Principal #123", "2026-09-10", "Pendiente"),
         Incidencia(2, "Alumbrado apagado", "Luminaria fundida en el parque central.", "Parque Central", "2026-09-11", "En proceso"),
         Incidencia(3, "Fuga de agua", "Fuga constante en la banqueta frente al mercado.", "Calle Hidalgo #45", "2026-09-12", "Pendiente"),
@@ -32,5 +32,21 @@ object IncidenciasDummy {
         Incidencia(8, "Poste inclinado", "Poste de luz inclinado tras la tormenta.", "Av. Universidad #200", "2026-09-16", "En proceso")
     )
 
-    fun porId(id: Int): Incidencia? = lista.find { it.id == id }
+    val lista: List<Incidencia> get() = _lista.toList()
+
+    fun porId(id: Int): Incidencia? = _lista.find { it.id == id }
+
+    /** Agrega una incidencia y la devuelve con id autogenerado. */
+    fun agregar(
+        titulo: String,
+        descripcion: String,
+        ubicacion: String,
+        fecha: String,
+        estado: String
+    ): Incidencia {
+        val nuevoId = (_lista.maxOfOrNull { it.id } ?: 0) + 1
+        val nueva = Incidencia(nuevoId, titulo, descripcion, ubicacion, fecha, estado)
+        _lista.add(0, nueva)
+        return nueva
+    }
 }

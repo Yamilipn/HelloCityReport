@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hellocityreport.R
 import com.example.hellocityreport.model.IncidenciasDummy
 
-/** Pantalla principal: lista dinámica de incidencias con RecyclerView. */
+/** Pantalla principal (Home): lista dinámica de incidencias con RecyclerView. */
 class ListaIncidenciasFragment : Fragment() {
+
+    private var adapter: IncidenciaAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +33,19 @@ class ListaIncidenciasFragment : Fragment() {
                 R.id.action_lista_to_detalle,
                 bundleOf("incidenciaId" to incidencia.id)
             )
-        }
+        }.also { this.adapter = it }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
         adapter.submitList(IncidenciasDummy.lista)
+
+        view.findViewById<View>(R.id.fabNueva).setOnClickListener {
+            findNavController().navigate(R.id.action_lista_to_nueva)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Recarga para mostrar incidencias creadas en NuevaIncidenciaFragment.
+        adapter?.submitList(IncidenciasDummy.lista)
     }
 }

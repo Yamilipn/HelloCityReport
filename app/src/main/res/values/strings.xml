@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">HelloCityReport</string>
+    <string name="nueva_incidencia_titulo">Nueva incidencia</string>
+    <string name="hint_titulo">Título</string>
+    <string name="hint_descripcion">Descripción</string>
+    <string name="hint_ubicacion">Ubicación</string>
+    <string name="hint_fecha">Fecha (yyyy-MM-dd)</string>
+    <string name="hint_estado">Estado</string>
+    <string name="guardar_incidencia">Guardar incidencia</string>
+    <string name="error_titulo_requerido">El título es requerido</string>
+    <string name="error_ubicacion_requerida">La ubicación es requerida</string>
+    <string name="sin_descripcion">Sin descripción</string>
+    <string name="incidencia_creada">Incidencia creada</string>
+    <string name="crear_incidencia">Crear incidencia</string>
+
+    <string-array name="estados_incidencia">
+        <item>Pendiente</item>
+        <item>En proceso</item>
+        <item>Resuelta</item>
+    </string-array>
 </resources>
