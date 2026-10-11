@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.HelloCityReport" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <!-- Material 3 + colores dinámicos (Material You en Android 12+). -->
+    <style name="Theme.HelloCityReport" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="dynamicColorThemeOverlay">@style/ThemeOverlay.Material3.DynamicColors.DayNight</item>
+    </style>
 </resources>

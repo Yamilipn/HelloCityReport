@@ -12,6 +12,13 @@
     <string name="sin_descripcion">Sin descripción</string>
     <string name="incidencia_creada">Incidencia creada</string>
     <string name="crear_incidencia">Crear incidencia</string>
+    <string name="incidencia_no_encontrada">Incidencia no encontrada</string>
+    <string name="incidencia_reintentar">Revisa la lista e intenta de nuevo.</string>
+    <string name="title_incidencias">Incidencias</string>
+    <string name="title_nueva">Nueva</string>
+    <string name="title_detalle">Detalle</string>
+    <string name="bottom_lista">Inicio</string>
+    <string name="bottom_nueva">Reportar</string>
 
     <string-array name="estados_incidencia">
         <item>Pendiente</item>

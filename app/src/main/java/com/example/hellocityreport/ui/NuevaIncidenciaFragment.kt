@@ -10,15 +10,25 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.hellocityreport.R
-import com.example.hellocityreport.model.IncidenciasDummy
+import com.example.hellocityreport.data.IncidenciaRepositoryImpl
+import com.example.hellocityreport.mvp.nueva.NuevaContract
+import com.example.hellocityreport.mvp.nueva.NuevaPresenter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/** Pantalla para crear una nueva incidencia y volver a la lista. */
-class NuevaIncidenciaFragment : Fragment() {
+/** Vista de crear incidencia en MVP: widgets + recursos, lógica en [NuevaPresenter]. */
+class NuevaIncidenciaFragment : Fragment(), NuevaContract.View {
+
+    private var presenter: NuevaContract.Presenter? = null
+
+    private var inputTitulo: TextInputEditText? = null
+    private var inputDescripcion: TextInputEditText? = null
+    private var inputUbicacion: TextInputEditText? = null
+    private var inputFecha: TextInputEditText? = null
+    private var inputEstado: AutoCompleteTextView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,53 +41,83 @@ class NuevaIncidenciaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val inputTitulo = view.findViewById<TextInputEditText>(R.id.inputTitulo)
-        val inputDescripcion = view.findViewById<TextInputEditText>(R.id.inputDescripcion)
-        val inputUbicacion = view.findViewById<TextInputEditText>(R.id.inputUbicacion)
-        val inputFecha = view.findViewById<TextInputEditText>(R.id.inputFecha)
-        val inputEstado = view.findViewById<AutoCompleteTextView>(R.id.inputEstado)
+        val presenter = NuevaPresenter(IncidenciaRepositoryImpl())
+        this.presenter = presenter
+        presenter.attach(this)
+
+        inputTitulo = view.findViewById(R.id.inputTitulo)
+        inputDescripcion = view.findViewById(R.id.inputDescripcion)
+        inputUbicacion = view.findViewById(R.id.inputUbicacion)
+        inputFecha = view.findViewById(R.id.inputFecha)
+        inputEstado = view.findViewById(R.id.inputEstado)
         val btnGuardar = view.findViewById<MaterialButton>(R.id.btnGuardar)
 
-        if (inputFecha.text.isNullOrBlank()) {
-            val hoy = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
-            inputFecha.setText(hoy)
-        }
-
         val estados = resources.getStringArray(R.array.estados_incidencia).toList()
-        inputEstado.setAdapter(
-            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, estados)
+        val hoy = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+        presenter.onInit(
+            fechaActual = hoy,
+            estadoDefault = estados.first(),
+            estados = estados
         )
-        if (inputEstado.text.isNullOrBlank()) inputEstado.setText(estados.first(), false)
 
         btnGuardar.setOnClickListener {
-            val titulo = inputTitulo.text?.toString()?.trim().orEmpty()
-            val descripcion = inputDescripcion.text?.toString()?.trim().orEmpty()
-            val ubicacion = inputUbicacion.text?.toString()?.trim().orEmpty()
-            val fecha = inputFecha.text?.toString()?.trim().orEmpty()
-            val estado = inputEstado.text?.toString()?.trim().orEmpty().ifBlank { estados.first() }
-
-            if (titulo.isBlank()) {
-                inputTitulo.error = getString(R.string.error_titulo_requerido)
-                inputTitulo.requestFocus()
-                return@setOnClickListener
-            }
-            if (ubicacion.isBlank()) {
-                inputUbicacion.error = getString(R.string.error_ubicacion_requerida)
-                inputUbicacion.requestFocus()
-                return@setOnClickListener
-            }
-
-            val nueva = IncidenciasDummy.agregar(
-                titulo = titulo,
-                descripcion = descripcion.ifBlank { getString(R.string.sin_descripcion) },
-                ubicacion = ubicacion,
-                fecha = fecha.ifBlank { SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date()) },
-                estado = estado
+            presenter.onGuardar(
+                titulo = inputTitulo?.text?.toString().orEmpty(),
+                descripcion = inputDescripcion?.text?.toString().orEmpty(),
+                ubicacion = inputUbicacion?.text?.toString().orEmpty(),
+                fecha = inputFecha?.text?.toString().orEmpty(),
+                estado = inputEstado?.text?.toString().orEmpty(),
+                tituloErrorMsg = getString(R.string.error_titulo_requerido),
+                ubicacionErrorMsg = getString(R.string.error_ubicacion_requerida),
+                descripcionFallback = getString(R.string.sin_descripcion),
+                fechaFallback = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date()),
+                estadoFallback = estados.first()
             )
-
-            Toast.makeText(requireContext(), getString(R.string.incidencia_creada), Toast.LENGTH_SHORT).show()
-            // Volver a Home; onResume de la lista recarga el RecyclerView.
-            findNavController().popBackStack()
         }
+    }
+
+    override fun onDestroyView() {
+        presenter?.detach()
+        presenter = null
+        inputTitulo = null
+        inputDescripcion = null
+        inputUbicacion = null
+        inputFecha = null
+        inputEstado = null
+        super.onDestroyView()
+    }
+
+    override fun showFechaInicial(fecha: String) {
+        if (inputFecha?.text.isNullOrBlank()) {
+            inputFecha?.setText(fecha)
+        }
+    }
+
+    override fun showEstados(estados: List<String>, seleccionado: String) {
+        inputEstado?.setAdapter(
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, estados)
+        )
+        if (inputEstado?.text.isNullOrBlank()) {
+            inputEstado?.setText(seleccionado, false)
+        }
+    }
+
+    override fun showTituloError(message: String) {
+        inputTitulo?.error = message
+        inputTitulo?.requestFocus()
+    }
+
+    override fun showUbicacionError(message: String) {
+        inputUbicacion?.error = message
+        inputUbicacion?.requestFocus()
+    }
+
+    override fun showCreada() {
+        Toast.makeText(requireContext(), getString(R.string.incidencia_creada), Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun close() {
+        findNavController().popBackStack()
     }
 }

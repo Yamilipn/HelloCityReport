@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Los ids deben coincidir con los destinos del nav_graph para setupWithNavController. -->
+    <item
+        android:id="@+id/listaIncidenciasFragment"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/bottom_lista" />
+    <item
+        android:id="@+id/nuevaIncidenciaFragment"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="@string/bottom_nueva" />
+</menu>

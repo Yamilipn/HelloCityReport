@@ -10,12 +10,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hellocityreport.R
-import com.example.hellocityreport.model.IncidenciasDummy
+import com.example.hellocityreport.data.IncidenciaRepositoryImpl
+import com.example.hellocityreport.model.Incidencia
+import com.example.hellocityreport.mvp.lista.ListaContract
+import com.example.hellocityreport.mvp.lista.ListaPresenter
 
-/** Pantalla principal (Home): lista dinámica de incidencias con RecyclerView. */
-class ListaIncidenciasFragment : Fragment() {
+/** Vista de la lista (Home) en MVP: solo renderiza y delega al [ListaPresenter]. */
+class ListaIncidenciasFragment : Fragment(), ListaContract.View {
 
     private var adapter: IncidenciaAdapter? = null
+    private var presenter: ListaContract.Presenter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,25 +31,48 @@ class ListaIncidenciasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val presenter = ListaPresenter(IncidenciaRepositoryImpl())
+        this.presenter = presenter
+        presenter.attach(this)
+
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerIncidencias)
         val adapter = IncidenciaAdapter { incidencia ->
-            findNavController().navigate(
-                R.id.action_lista_to_detalle,
-                bundleOf("incidenciaId" to incidencia.id)
-            )
+            presenter.onIncidenciaClicked(incidencia.id)
         }.also { this.adapter = it }
         recycler.layoutManager = LinearLayoutManager(requireContext())
         recycler.adapter = adapter
-        adapter.submitList(IncidenciasDummy.lista)
 
         view.findViewById<View>(R.id.fabNueva).setOnClickListener {
-            findNavController().navigate(R.id.action_lista_to_nueva)
+            presenter.onNuevaClicked()
         }
+
+        presenter.onViewReady()
     }
 
     override fun onResume() {
         super.onResume()
-        // Recarga para mostrar incidencias creadas en NuevaIncidenciaFragment.
-        adapter?.submitList(IncidenciasDummy.lista)
+        presenter?.onResume()
+    }
+
+    override fun onDestroyView() {
+        presenter?.detach()
+        presenter = null
+        adapter = null
+        super.onDestroyView()
+    }
+
+    override fun showIncidencias(items: List<Incidencia>) {
+        adapter?.submitList(items)
+    }
+
+    override fun navigateToDetalle(id: Int) {
+        findNavController().navigate(
+            R.id.action_lista_to_detalle,
+            bundleOf("incidenciaId" to id)
+        )
+    }
+
+    override fun navigateToNueva() {
+        findNavController().navigate(R.id.action_lista_to_nueva)
     }
 }

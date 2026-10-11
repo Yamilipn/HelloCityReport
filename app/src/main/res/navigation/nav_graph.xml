@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/listaIncidenciasFragment"
         android:name="com.example.hellocityreport.ui.ListaIncidenciasFragment"
-        android:label="Incidencias">
+        android:label="@string/title_incidencias">
         <action
             android:id="@+id/action_lista_to_detalle"
             app:destination="@id/detalleIncidenciaFragment" />
@@ -19,12 +19,18 @@
     <fragment
         android:id="@+id/nuevaIncidenciaFragment"
         android:name="com.example.hellocityreport.ui.NuevaIncidenciaFragment"
-        android:label="Nueva incidencia" />
+        android:label="@string/title_nueva">
+        <action
+            android:id="@+id/action_nueva_to_lista"
+            app:destination="@id/listaIncidenciasFragment"
+            app:popUpTo="@id/listaIncidenciasFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/detalleIncidenciaFragment"
         android:name="com.example.hellocityreport.ui.DetalleIncidenciaFragment"
-        android:label="Detalle">
+        android:label="@string/title_detalle">
         <argument
             android:name="incidenciaId"
             app:argType="integer" />
