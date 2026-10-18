@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wireframe Detallado – Pantalla de Reporte | HelloCityReport</title>
+<style>
+  :root{
+    --primary:#6750A4;
+    --primary-dark:#4F378B;
+    --primary-container:#EADDFF;
+    --on-primary:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-variant:#F3EDF7;
+    --outline:#C4C7C5;
+    --outline-variant:#E0E0E0;
+    --text:#1C1B1F;
+    --text-secondary:#49454F;
+    --muted:#79747E;
+    --map:#E1F0FF;
+    --map-road:#B3D9FF;
+    --map-stroke:#90CAF9;
+    --photo:#F3E5F5;
+    --photo-stroke:#CE93D8;
+    --success:#2E7D32;
+    --warning:#EF6C00;
+    --error:#B3261E;
+    --radius:20px;
+    --radius-sm:10px;
+    --radius-xs:6px;
+    --shadow:0 6px 20px rgba(0,0,0,.08);
+    --shadow-lg:0 24px 64px rgba(0,0,0,.20);
+    --shadow-card:0 2px 8px rgba(0,0,0,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background:linear-gradient(145deg,#F3EFFF 0%,#E8F5E9 50%,#E3F2FD 100%);
+    color:var(--text);
+    min-height:100vh;
+    padding:32px 20px 48px;
+  }
+  .container{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+
+  /* Hero */
+  .hero{
+    background:linear-gradient(135deg,var(--primary) 0%,#9C7EDB 100%);
+    color:#fff;
+    border-radius:24px;
+    padding:36px 40px;
+    box-shadow:var(--shadow-lg);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+    border-radius:50%;background:rgba(255,255,255,.12);
+  }
+  .hero h1{font-size:30px;font-weight:800;margin-bottom:8px;letter-spacing:-.3px}
+  .hero p{font-size:15px;opacity:.93;line-height:1.55;max-width:760px}
+  .hero .chips{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 12px;border-radius:16px;
+    background:rgba(255,255,255,.18);font-size:12px;font-weight:600;
+    backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);
+  }
+
+  /* Section */
+  .section{
+    background:#fff;border-radius:24px;padding:28px 32px;
+    box-shadow:var(--shadow);border:1px solid #F0F0F0;
+  }
+  .section h2{
+    font-size:20px;font-weight:800;color:var(--text);
+    margin-bottom:6px;display:flex;align-items:center;gap:12px;
+  }
+  .section h2 .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--primary);color:#fff;font-size:14px;font-weight:700;
+    box-shadow:0 2px 6px rgba(103,80,164,.35);
+  }
+  .section p.desc{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.55;max-width:820px}
+
+  .row{display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+
+  /* Phone device */
+  .device{
+    width:380px;flex-shrink:0;
+    filter:drop-shadow(0 30px 60px rgba(0,0,0,.22));
+  }
+  .phone{
+    width:380px;height:820px;
+    background:#fff;border-radius:44px;
+    overflow:hidden;display:flex;flex-direction:column;
+    position:relative;border:8px solid #1C1B1F;
+  }
+  .phone::before{
+    content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);
+    width:120px;height:26px;border-radius:13px;background:#1C1B1F;z-index:10;
+  }
+  .status{
+    height:40px;background:#F7F2FA;
+    display:flex;align-items:flex-end;justify-content:space-between;
+    padding:0 24px 6px;font-size:12px;color:var(--text-secondary);font-weight:600;
+    flex-shrink:0;
+  }
+  .appbar{
+    height:60px;background:var(--primary);color:#fff;
+    display:flex;align-items:center;padding:0 20px;gap:14px;
+    font-size:19px;font-weight:700;flex-shrink:0;
+    box-shadow:0 2px 8px rgba(0,0,0,.18);
+  }
+  .appbar .back{font-size:22px;opacity:.95}
+  .appbar .title{flex:1}
+  .appbar .action{font-size:20px;opacity:.9}
+  .content{
+    flex:1;overflow-y:auto;background:#FAFAFA;
+    padding:16px 18px 20px;
+  }
+  .content::-webkit-scrollbar{width:6px}
+  .content::-webkit-scrollbar-thumb{background:#CCC;border-radius:3px}
+
+  /* Cards */
+  .card{
+    background:var(--surface);border-radius:var(--radius);
+    padding:18px;margin-bottom:16px;
+    box-shadow:var(--shadow-card);border:1px solid #F0F0F0;
+    transition:transform .15s ease;
+  }
+  .card h3{
+    font-size:15px;font-weight:700;color:var(--text);
+    margin-bottom:12px;display:flex;align-items:center;gap:10px;
+  }
+  .badge{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:50%;
+    background:var(--primary);color:#fff;font-size:13px;font-weight:700;
+    box-shadow:0 2px 4px rgba(103,80,164,.3);
+  }
+
+  /* Map */
+  .map{
+    position:relative;height:200px;border-radius:14px;
+    background:
+      linear-gradient(0deg, rgba(255,255,255,.5), rgba(255,255,255,.5)),
+      repeating-linear-gradient(0deg, transparent 0 23px, var(--map-road) 23px 24px),
+      repeating-linear-gradient(90deg, transparent 0 23px, var(--map-road) 23px 24px),
+      var(--map);
+    border:1px solid var(--map-stroke);overflow:hidden;
+  }
+  .map .road-h{
+    position:absolute;left:0;right:0;top:50%;height:6px;
+    background:rgba(255,255,255,.7);transform:translateY(-3px);
+  }
+  .map .road-v{
+    position:absolute;top:0;bottom:0;left:50%;width:6px;
+    background:rgba(255,255,255,.7);transform:translateX(-3px);
+  }
+  .map .marker{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);
+    width:34px;height:34px;
+    filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));
+    z-index:3;
+  }
+  .map .pulse{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:18px;height:18px;border-radius:50%;
+    background:rgba(179,38,30,.22);
+    animation:pulse 1.8s infinite;
+  }
+  @keyframes pulse{
+    0%{transform:translate(-50%,-50%) scale(.7);opacity:.9}
+    100%{transform:translate(-50%,-50%) scale(2.4);opacity:0}
+  }
+  .map .zoom{
+    position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:8px;
+  }
+  .map .zoom button{
+    width:32px;height:32px;border:none;border-radius:8px;background:#fff;
+    box-shadow:0 2px 6px rgba(0,0,0,.18);font-size:18px;font-weight:700;color:#424242;
+  }
+  .map .myloc{
+    position:absolute;left:14px;bottom:14px;width:40px;height:40px;
+    border:none;border-radius:50%;background:var(--primary);color:#fff;font-size:18px;
+    box-shadow:0 3px 8px rgba(103,80,164,.4);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .map .accuracy{
+    position:absolute;bottom:14px;right:14px;
+    background:rgba(255,255,255,.92);border-radius:8px;
+    padding:4px 8px;font-size:10px;color:var(--primary);font-weight:600;
+    box-shadow:0 1px 4px rgba(0,0,0,.12);
+  }
+  .map .hint{
+    position:absolute;top:12px;left:14px;
+    background:rgba(255,255,255,.9);border-radius:6px;
+    padding:3px 8px;font-size:10px;color:#1565C0;font-weight:600;
+  }
+  .address{
+    margin-top:12px;font-size:14px;color:var(--text);
+    display:flex;align-items:center;gap:8px;font-weight:500;
+  }
+  .address .pin{color:var(--error);font-size:16px}
+  .caption{margin-top:4px;font-size:11.5px;color:var(--muted);font-style:italic}
+
+  /* Photo */
+  .photo-preview{
+    height:180px;border-radius:14px;
+    background:linear-gradient(135deg,var(--photo) 0%,#E8D5F0 100%);
+    border:2px dashed var(--photo-stroke);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;color:#6A1B9A;position:relative;overflow:hidden;
+  }
+  .photo-preview .viewfinder{
+    width:120px;height:90px;border:2px solid rgba(106,27,154,.4);
+    border-radius:8px;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.35);
+  }
+  .photo-preview .icon{font-size:36px}
+  .photo-preview .label{font-size:12.5px;text-align:center;padding:0 16px;font-weight:500}
+  .photo-preview .shutter{
+    position:absolute;bottom:12px;right:12px;width:34px;height:34px;
+    border-radius:50%;background:rgba(255,255,255,.95);
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+    box-shadow:0 2px 6px rgba(0,0,0,.2);border:2px solid var(--photo-stroke);
+  }
+  .photo-preview .badge-photo{
+    position:absolute;top:10px;left:10px;
+    background:rgba(106,27,154,.85);color:#fff;
+    font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;
+  }
+  .btn-row{display:flex;gap:12px;margin-top:14px}
+  .btn{
+    flex:1;height:44px;border:none;border-radius:22px;font-size:13.5px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;gap:8px;cursor:default;
+    transition:transform .12s ease;
+  }
+  .btn.primary{
+    background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
+    color:#fff;box-shadow:0 3px 10px rgba(103,80,164,.4);
+  }
+  .btn.outline{background:#fff;color:var(--primary);border:1.5px solid var(--primary)}
+  .btn.disabled{background:#E0E0E0;color:#9E9E9E;box-shadow:none}
+
+  /* Form */
+  .field{margin-bottom:14px}
+  .field label{
+    display:block;font-size:12.5px;color:var(--muted);
+    margin-bottom:5px;font-weight:600;letter-spacing:.2px;
+  }
+  .field label .req{color:var(--error)}
+  .input{
+    width:100%;height:48px;border:1px solid var(--outline);
+    border-radius:var(--radius-sm);padding:0 14px;
+    font-size:13.5px;color:#9E9E9E;background:#FAFAFA;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:border-color .15s ease;
+  }
+  .input.textarea{height:76px;align-items:flex-start;padding-top:12px}
+  .input.readonly{background:#F5F5F5;color:#616161}
+  .input.error{border-color:var(--error);background:#FDECEA}
+  .helper{font-size:10.5px;color:var(--muted);margin-top:4px}
+  .helper.error{color:var(--error)}
+  .row{display:flex;gap:12px}
+  .row .field{flex:1}
+  .save{
+    margin-top:8px;width:100%;height:52px;border:none;border-radius:26px;
+    background:linear-gradient(135deg,var(--success) 0%,#1B5E20 100%);
+    color:#fff;font-size:15px;font-weight:700;
+    box-shadow:0 4px 12px rgba(46,125,50,.4);
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .save.disabled{background:#BDBDBD;box-shadow:none}
+
+  /* Bottom nav */
+  .bottomnav{
+    height:60px;background:var(--surface-variant);
+    display:flex;align-items:center;justify-content:space-around;
+    border-top:1px solid #E0E0E0;flex-shrink:0;
+  }
+  .navitem{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    font-size:11px;color:var(--muted);font-weight:500;
+  }
+  .navitem.active{color:var(--primary);font-weight:700}
+  .navitem .ic{font-size:20px}
+
+  /* Notes */
+  .notes{flex:1;min-width:340px;max-width:440px}
+  .notes h2{font-size:17px;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px;font-weight:800}
+  .note-group{margin-bottom:16px}
+  .note-group h4{
+    font-size:12.5px;font-weight:700;color:var(--primary);
+    margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;
+  }
+  .notes ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .notes li{
+    font-size:13px;color:#424242;line-height:1.5;
+    padding-left:18px;position:relative;
+  }
+  .notes li::before{
+    content:"•";position:absolute;left:0;
+    color:var(--primary);font-weight:700;font-size:16px;line-height:1;
+  }
+  .notes li strong{color:var(--text);font-weight:600}
+  .legend{margin-top:18px;padding-top:16px;border-top:1px solid #EEE}
+  .legend .label{font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600}
+  .legend .chip{
+    display:inline-block;padding:4px 10px;border-radius:14px;
+    background:var(--primary-container);color:#4A3780;
+    font-size:11px;font-weight:600;margin:3px;
+  }
+
+  /* States */
+  .states-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .state-card{
+    border:1px solid #E0E0E0;border-radius:14px;padding:14px;
+    background:#FAFAFA;transition:transform .15s ease;
+  }
+  .state-card h4{font-size:13.5px;font-weight:700;margin-bottom:6px;color:var(--text)}
+  .state-card p{font-size:11.5px;color:var(--muted);line-height:1.45}
+  .state-preview{
+    height:96px;border-radius:10px;margin-bottom:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;color:#fff;font-weight:700;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);
+  }
+  .sp-perm{background:linear-gradient(135deg,#EF5350,#C62828)}
+  .sp-load{background:linear-gradient(135deg,#42A5F5,#1565C0)}
+  .sp-nophoto{background:linear-gradient(135deg,#AB47BC,#6A1B9A)}
+  .sp-ready{background:linear-gradient(135deg,#66BB6A,#2E7D32)}
+
+  /* Specs */
+  .specs{overflow-x:auto;border-radius:12px;border:1px solid #EEE}
+  table{width:100%;border-collapse:collapse;font-size:12.5px}
+  th,td{padding:10px 12px;border-bottom:1px solid #EEE;text-align:left;vertical-align:top}
+  th{background:#F5F5F5;font-weight:700;color:var(--text);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+  tr:last-child td{border-bottom:none}
+  td code{background:#F3EDF7;padding:2px 7px;border-radius:5px;font-size:11px;color:#4A3780;font-weight:600}
+
+  /* Flow */
+  .flow{display:flex;flex-direction:column;gap:10px}
+  .flow-step{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 14px;border-radius:12px;
+    background:#FAFAFA;border:1px solid #EEE;
+  }
+  .flow-step .n{
+    width:30px;height:30px;border-radius:50%;
+    background:var(--primary);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;flex-shrink:0;
+    box-shadow:0 2px 4px rgba(103,80,164,.3);
+  }
+  .flow-step .t{font-size:13.5px;color:#424242;line-height:1.5}
+  .flow-step .t strong{color:var(--text);font-weight:600}
+
+  /* Tokens */
+  .tokens-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+  .token{border:1px solid #EEE;border-radius:12px;padding:12px;background:#FAFAFA}
+  .token .swatch{height:36px;border-radius:8px;margin-bottom:8px;border:1px solid rgba(0,0,0,.08)}
+  .token .name{font-size:12.5px;font-weight:700;color:var(--text)}
+  .token .value{font-size:11px;color:var(--muted);font-family:"Consolas",monospace;margin-top:2px}
+
+  /* Integration */
+  .integ{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .integ-card{border:1px solid #EEE;border-radius:12px;padding:14px;background:#FAFAFA}
+  .integ-card h4{font-size:13.5px;font-weight:700;margin-bottom:6px;color:var(--primary)}
+  .integ-card p{font-size:12.5px;color:#424242;line-height:1.5}
+  .integ-card code{background:#F3EDF7;padding:2px 6px;border-radius:5px;font-size:11px;color:#4A3780;font-weight:600}
+
+  /* Accessibility */
+  .a11y{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+  .a11y-item{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:10px 12px;border-radius:10px;background:#FAFAFA;border:1px solid #EEE;
+    font-size:13px;color:#424242;line-height:1.45;
+  }
+  .a11y-item .ic{font-size:18px;flex-shrink:0}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .container{gap:20px}
+    .device,.phone{box-shadow:none;break-inside:avoid}
+    .section{break-inside:avoid;box-shadow:none;border:1px solid #DDD}
+    @page{size:A4;margin:12mm}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Wireframe Detallado – Pantalla de Reporte</h1>
+    <p>HelloCityReport · App Android (Kotlin, MVP + Material 3) · Entregable de diseño para revisión en clase.<br/>
+       Integra mapa (Fused Location Provider) y foto (CameraX) de forma organizada, usable y accesible.</p>
+    <div class="chips">
+      <span class="chip">🗺️ Mapa</span>
+      <span class="chip">📸 Foto</span>
+      <span class="chip">📋 Formulario</span>
+      <span class="chip">Material 3</span>
+      <span class="chip">MVP</span>
+      <span class="chip">Accesible</span>
+    </div>
+  </div>
+
+  <!-- 1. Pantalla principal -->
+  <div class="section">
+    <h2><span class="num">1</span> Pantalla principal (estado “Listo”)</h2>
+    <p class="desc">Vista completa del reporte. La ubicación se detecta automáticamente y la foto es obligatoria para validar el reporte.</p>
+    <div class="row">
+      <div class="device">
+        <div class="phone">
+          <div class="status">
+            <span>9:41</span>
+            <span style="font-size:11px">📶 🔋</span>
+          </div>
+          <div class="appbar">
+            <span class="back">←</span>
+            <span class="title">Reportar incidencia</span>
+            <span class="action">⋮</span>
+          </div>
+          <div class="content">
+
+            <!-- Card 1: Mapa -->
+            <div class="card">
+              <h3><span class="badge">1</span> Ubicación del reporte</h3>
+              <div class="map">
+                <div class="road-h"></div>
+                <div class="road-v"></div>
+                <div class="pulse"></div>
+                <div class="marker">
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" fill="#B3261E"/>
+                  </svg>
+                </div>
+                <div class="zoom">
+                  <button>+</button>
+                  <button>−</button>
+                </div>
+                <div class="myloc" aria-label="Mi ubicación">◎</div>
+                <div class="hint">Toca para ajustar</div>
+                <div class="accuracy">Precisión ~12 m</div>
+              </div>
+              <div class="address"><span class="pin">📍</span> Av. Principal #123, Col. Centro</div>
+              <div class="caption">Ubicación detectada con Fused Location Provider</div>
+            </div>
+
+            <!-- Card 2: Foto -->
+            <div class="card">
+              <h3><span class="badge">2</span> Evidencia fotográfica</h3>
+              <div class="photo-preview">
+                <div class="badge-photo">Foto requerida</div>
+                <div class="viewfinder">
+                  <div class="icon">📷</div>
+                </div>
+                <div class="label">Vista previa de la foto<br/>(CameraX PreviewView)</div>
+                <div class="shutter">📸</div>
+              </div>
+              <div class="btn-row">
+                <button class="btn primary">📸 Tomar foto</button>
+                <button class="btn outline">🖼️ Galería</button>
+              </div>
+              <div class="caption">Formato JPEG · se guarda URI local</div>
+            </div>
+
+            <!-- Card 3: Formulario -->
+            <div class="card">
+              <h3><span class="badge">3</span> Datos del reporte</h3>
+              <div class="field">
+                <label>Título <span class="req">*</span></label>
+                <div class="input">Bache en Av. Principal</div>
+                <div class="helper">Máx. 60 caracteres</div>
+              </div>
+              <div class="field">
+                <label>Descripción</label>
+                <div class="input textarea">Bache profundo que dificulta el paso vehicular…</div>
+                <div class="helper">Opcional · “Sin descripción” si queda vacío</div>
+              </div>
+              <div class="field">
+                <label>Ubicación (automática) <span class="req">*</span></label>
+                <div class="input readonly">Av. Principal #123</div>
+                <div class="helper">Se autocompleta desde el mapa · editable</div>
+              </div>
+              <div class="row">
+                <div class="field">
+                  <label>Fecha</label>
+                  <div class="input">2026-10-18 📅</div>
+                </div>
+                <div class="field">
+                  <label>Estado</label>
+                  <div class="input">Pendiente ▾</div>
+                </div>
+              </div>
+              <button class="save">✅ Guardar reporte</button>
+            </div>
+
+          </div>
+          <div class="bottomnav">
+            <div class="navitem">
+              <div class="ic">🏠</div>
+              <div>Inicio</div>
+            </div>
+            <div class="navitem active">
+              <div class="ic">📝</div>
+              <div>Reportar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="notes">
+        <h2>📋 Anotaciones</h2>
+        <div class="note-group">
+          <h4>Mapa</h4>
+          <ul>
+            <li><strong>Tarjeta 1:</strong> mapa con marcador arrastrable, zoom +/-, botón “Mi ubicación” y dirección detectada.</li>
+            <li><strong>Fused Location:</strong> `getLastLocation()` / `requestLocationUpdates()` + `LocationCallback`.</li>
+            <li><strong>Permisos:</strong> `ACCESS_FINE_LOCATION` en runtime.</li>
+          </ul>
+        </div>
+        <div class="note-group">
+          <h4>Foto</h4>
+          <ul>
+            <li><strong>Tarjeta 2:</strong> PreviewView de CameraX, botón “Tomar foto” (primario) y “Galería”.</li>
+            <li><strong>CameraX:</strong> `Preview` + `ImageCapture`, `ProcessCameraProvider`, `bindToLifecycle()`.</li>
+            <li><strong>Obligatoria:</strong> deshabilita Guardar si no hay foto.</li>
+          </ul>
+        </div>
+        <div class="note-group">
+          <h4>Formulario</h4>
+          <ul>
+            <li><strong>Tarjeta 3:</strong> validación en vivo; ubicación autocompletada; fecha por defecto = hoy.</li>
+            <li><strong>Botón Guardar:</strong> habilitado solo si título, ubicación y foto están presentes.</li>
+          </ul>
+        </div>
+        <div class="note-group">
+          <h4>Navegación</h4>
+          <ul>
+            <li><strong>TopAppBar:</strong> título + back + menú.</li>
+            <li><strong>BottomNav:</strong> “Inicio” y “Reportar” (destinos top-level).</li>
+            <li><strong>Scroll:</strong> contenido en ScrollView; app bar y bottom nav fijos.</li>
+          </ul>
+        </div>
+        <div class="legend">
+          <div class="label">Leyenda de componentes</div>
+          <span class="chip">MapView</span>
+          <span class="chip">PreviewView</span>
+          <span class="chip">FusedLocation</span>
+          <span class="chip">CameraX</span>
+          <span class="chip">MVP</span>
+          <span class="chip">Material 3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Estados -->
+  <div class="section">
+    <h2><span class="num">2</span> Estados de la pantalla</h2>
+    <p class="desc">Comportamiento de la UI en cada fase del flujo de reporte.</p>
+    <div class="states-grid">
+      <div class="state-card">
+        <div class="state-preview sp-perm">🔒 Sin permiso</div>
+        <h4>Sin permiso de ubicación</h4>
+        <p>Tarjeta 1 muestra placeholder + botón “Conceder permiso”. El mapa se reemplaza. Guardar deshabilitado.</p>
+      </div>
+      <div class="state-card">
+        <div class="state-preview sp-load">⏳ Cargando</div>
+        <h4>Obteniendo ubicación</h4>
+        <p>Spinner en el mapa. “Mi ubicación” con indicador. Dirección: “Buscando…”.</p>
+      </div>
+      <div class="state-card">
+        <div class="state-preview sp-nophoto">📷 Sin foto</div>
+        <h4>Sin evidencia fotográfica</h4>
+        <p>PreviewView con placeholder e ícono de cámara. Guardar deshabilitado.</p>
+      </div>
+      <div class="state-card">
+        <div class="state-preview sp-ready">✅ Listo</div>
+        <h4>Listo para guardar</h4>
+        <p>Mapa con marcador, foto capturada, campos válidos. Guardar habilitado.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Especificación -->
+  <div class="section">
+    <h2><span class="num">3</span> Especificación de componentes y medidas</h2>
+    <p class="desc">Dimensiones, espaciados y comportamiento de cada elemento clave.</p>
+    <div class="specs">
+      <table>
+        <thead>
+          <tr><th>Componente</th><th>Medida</th><th>Color / Token</th><th>Comportamiento</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>TopAppBar</td><td>60 dp alto</td><td><code>primary #6750A4</code></td><td>Fijo, título, back + menú</td></tr>
+          <tr><td>Tarjeta (card)</td><td>padding 18 dp, radius 20 dp</td><td><code>surface #FFFFFF</code></td><td>Elevación 2 dp, separación 16 dp</td></tr>
+          <tr><td>MapView</td><td>alto 200 dp, radius 14 dp</td><td><code>map #E1F0FF</code></td><td>Marcador arrastrable, zoom, “Mi ubicación”</td></tr>
+          <tr><td>Marcador</td><td>34 × 34 dp</td><td><code>error #B3261E</code></td><td>Animación pulse al actualizar</td></tr>
+          <tr><td>PreviewView (foto)</td><td>alto 180 dp, radius 14 dp</td><td><code>photo #F3E5F5</code></td><td>Placeholder con viewfinder si no hay foto</td></tr>
+          <tr><td>Botón primario</td><td>44 dp alto, radius 22 dp</td><td><code>primary #6750A4</code></td><td>“Tomar foto”, ripple, mínimo 48 dp táctil</td></tr>
+          <tr><td>Botón secundario</td><td>44 dp alto, radius 22 dp</td><td>outline <code>primary</code></td><td>“Galería”, borde 1.5 dp</td></tr>
+          <tr><td>Input de texto</td><td>48 dp alto, radius 10 dp</td><td><code>outline #C4C7C5</code></td><td>Error: borde rojo + fondo #FDECEA</td></tr>
+          <tr><td>Textarea descripción</td><td>76 dp alto</td><td><code>outline #C4C7C5</code></td><td>minLines 3, scroll interno</td></tr>
+          <tr><td>Botón Guardar</td><td>52 dp alto, radius 26 dp</td><td><code>success #2E7D32</code></td><td>Deshabilitado hasta validar campos</td></tr>
+          <tr><td>BottomNav</td><td>60 dp alto</td><td><code>surface-variant #F3EDF7</code></td><td>2 destinos top-level, etiqueta visible</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4. Flujo -->
+  <div class="section">
+    <h2><span class="num">4</span> Flujo de interacción</h2>
+    <p class="desc">Secuencia esperada del usuario al crear un reporte.</p>
+    <div class="flow">
+      <div class="flow-step"><div class="n">1</div><div class="t"><strong>Abrir pantalla</strong> → se solicita permiso de ubicación si no está concedido.</div></div>
+      <div class="flow-step"><div class="n">2</div><div class="t"><strong>Obtener ubicación</strong> con Fused Location Provider y mostrar marcador + dirección.</div></div>
+      <div class="flow-step"><div class="n">3</div><div class="t"><strong>Ajustar marcador</strong> tocando el mapa o con “Mi ubicación”.</div></div>
+      <div class="flow-step"><div class="n">4</div><div class="t"><strong>Capturar foto</strong> con CameraX (Preview + ImageCapture) o seleccionar de galería.</div></div>
+      <div class="flow-step"><div class="n">5</div><div class="t"><strong>Completar formulario</strong> (título requerido, ubicación autocompletada, fecha por defecto, estado).</div></div>
+      <div class="flow-step"><div class="n">6</div><div class="t"><strong>Validar y guardar</strong>: título y ubicación no vacíos; foto presente; Toast “Incidencia creada” y volver a lista.</div></div>
+    </div>
+  </div>
+
+  <!-- 5. Tokens -->
+  <div class="section">
+    <h2><span class="num">5</span> Tokens de diseño (Material 3)</h2>
+    <p class="desc">Colores, tipografía y espaciados utilizados en el wireframe.</p>
+    <div class="tokens-grid">
+      <div class="token"><div class="swatch" style="background:#6750A4"></div><div class="name">primary</div><div class="value">#6750A4</div></div>
+      <div class="token"><div class="swatch" style="background:#EADDFF"></div><div class="name">primary-container</div><div class="value">#EADDFF</div></div>
+      <div class="token"><div class="swatch" style="background:#2E7D32"></div><div class="name">success</div><div class="value">#2E7D32</div></div>
+      <div class="token"><div class="swatch" style="background:#B3261E"></div><div class="name">error</div><div class="value">#B3261E</div></div>
+      <div class="token"><div class="swatch" style="background:#E1F0FF;border:1px solid #90CAF9"></div><div class="name">map</div><div class="value">#E1F0FF</div></div>
+      <div class="token"><div class="swatch" style="background:#F3E5F5;border:1px solid #CE93D8"></div><div class="name">photo</div><div class="value">#F3E5F5</div></div>
+      <div class="token"><div class="swatch" style="background:#F3EDF7"></div><div class="name">surface-variant</div><div class="value">#F3EDF7</div></div>
+      <div class="token"><div class="swatch" style="background:#FFFFFF;border:1px solid #E0E0E0"></div><div class="name">surface</div><div class="value">#FFFFFF</div></div>
+    </div>
+    <div style="margin-top:14px;font-size:12.5px;color:var(--muted);line-height:1.6">
+      <strong>Tipografía:</strong> Roboto / Segoe UI · Títulos 15–20 sp · Cuerpo 12.5–14 sp · Auxiliar 10.5–11.5 sp.<br/>
+      <strong>Espaciados:</strong> 8 / 12 / 14 / 16 / 18 dp. <strong>Radios:</strong> 6 (chips) / 10 (inputs) / 14 (media) / 20 (cards) / 22–26 (botones).
+    </div>
+  </div>
+
+  <!-- 6. Integración -->
+  <div class="section">
+    <h2><span class="num">6</span> Integración con la arquitectura actual (MVP)</h2>
+    <p class="desc">Clases y capas que se deben ampliar para implementar el wireframe.</p>
+    <div class="integ">
+      <div class="integ-card"><h4>Vista (Fragment)</h4><p>Ampliar `NuevaIncidenciaFragment` o crear `ReporteIncidenciaFragment`. Añadir MapView/PreviewView y manejo de permisos.</p></div>
+      <div class="integ-card"><h4>Presenter</h4><p>Extender `NuevaPresenter` con métodos de ubicación y foto; mantener validación y alta.</p></div>
+      <div class="integ-card"><h4>Repositorio / Modelo</h4><p>Agregar campos `lat`, `lng` y `fotoUri` a `Incidencia` (futuro). Guardar URI local.</p></div>
+      <div class="integ-card"><h4>Navegación</h4><p>Acción desde lista (FAB) a reporte; popBackStack tras guardar.</p></div>
+      <div class="integ-card"><h4>Permisos (Manifest)</h4><p>`ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION`, `CAMERA`. Solicitud en runtime.</p></div>
+      <div class="integ-card"><h4>Dependencias</h4><p>play-services-location, camerax-core/camera2/lifecycle/view, y Maps SDK (o alternativa).</p></div>
+    </div>
+  </div>
+
+  <!-- 7. Accesibilidad -->
+  <div class="section">
+    <h2><span class="num">7</span> Accesibilidad y usabilidad</h2>
+    <p class="desc">Criterios aplicados para que el diseño sea fácil de entender y usar.</p>
+    <div class="a11y">
+      <div class="a11y-item"><span class="ic">👆</span> Áreas táctiles mínimas de 48 dp en botones e inputs.</div>
+      <div class="a11y-item"><span class="ic">🎨</span> Contraste de texto ≥ 4.5:1 sobre fondos (Material 3).</div>
+      <div class="a11y-item"><span class="ic">🔊</span> contentDescription en botones de mapa, cámara y navegación.</div>
+      <div class="a11y-item"><span class="ic">⚠️</span> Mensajes de error junto al campo (no solo Toast).</div>
+      <div class="a11y-item"><span class="ic">👁️</span> Estados visibles con color + ícono + texto.</div>
+      <div class="a11y-item"><span class="ic">📝</span> Etiquetas claras y ayuda contextual en cada campo.</div>
+      <div class="a11y-item"><span class="ic">📜</span> Scroll vertical con app bar y bottom nav fijos.</div>
+      <div class="a11y-item"><span class="ic">⌨️</span> Navegación por teclado y foco visible.</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;font-size:11.5px;color:var(--muted);padding:10px 0 0">
+    HelloCityReport · Wireframe de pantalla de reporte · Entregable para revisión en clase
+  </div>
+
+</div>
+</body>
+</html>
