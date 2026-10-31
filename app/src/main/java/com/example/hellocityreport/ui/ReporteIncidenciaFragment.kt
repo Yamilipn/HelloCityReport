@@ -161,6 +161,14 @@ class ReporteIncidenciaFragment : Fragment(), ReporteContract.View, OnMapReadyCa
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.isMyLocationButtonEnabled = true
+        if (hasLocationPermission()) {
+            try {
+                map.isMyLocationEnabled = true
+            } catch (e: SecurityException) {
+                // sin permiso, se ignora
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -194,6 +202,9 @@ class ReporteIncidenciaFragment : Fragment(), ReporteContract.View, OnMapReadyCa
         val pos = LatLng(lat, lng)
         val map = googleMap
         if (map != null) {
+            try {
+                if (hasLocationPermission()) map.isMyLocationEnabled = true
+            } catch (e: SecurityException) { }
             if (locationMarker == null) {
                 locationMarker = map.addMarker(MarkerOptions().position(pos).title(getString(R.string.mi_ubicacion)))
             } else {
