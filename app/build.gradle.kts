@@ -3,6 +3,19 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+// Lee la API key de Google Maps desde variable de entorno o local.properties (gitignored).
+val mapsApiKey: String =
+    (System.getenv("MAPS_API_KEY")
+        ?: project.findProperty("MAPS_API_KEY") as String?
+        ?: run {
+            val lp = rootProject.file("local.properties")
+            if (lp.exists()) {
+                lp.readLines().firstOrNull { it.startsWith("MAPS_API_KEY=") }
+                    ?.substringAfter("=")?.trim()
+            } else null
+        }
+        ?: "YOUR_GOOGLE_MAPS_API_KEY")
+
 android {
     namespace = "com.example.hellocityreport"
     compileSdk {
@@ -17,6 +30,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
     }
 
     buildTypes {
