@@ -27,7 +27,8 @@ Arquitectura **MVP + Material 3**, con colores dinámicos (Material You).
    **Opción C — línea de comandos:**
    `./gradlew assembleDebug -PMAPS_API_KEY=TU_API_KEY`
 
-   > Sin key, la app compila y corre, pero el mapa se verá vacío (placeholder `YOUR_GOOGLE_MAPS_API_KEY`).
+   > La API key ya está incluida por defecto en el proyecto, por lo que el mapa funciona sin configuración adicional.
+   > Si quieres usar tu propia key, sobrescríbela con las opciones A/B/C.
 
 3. Obtén una API key en Google Cloud Console:
    - Habilita **Maps SDK for Android**.
