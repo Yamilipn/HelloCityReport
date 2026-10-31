@@ -1,0 +1,4 @@
+# Copia este archivo a local.properties (gitignored) y completa los valores.
+# NO subas local.properties al repositorio (contiene tu API key y ruta del SDK).
+MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
+sdk.dir=C:/Users/TU_USUARIO/AppData/Local/Android/Sdk
