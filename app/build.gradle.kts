@@ -14,6 +14,8 @@ val mapsApiKey: String =
                     ?.substringAfter("=")?.trim()?.takeIf { it.isNotBlank() }
             } else null
         }
+        // NOTA: esta es una API key de DEMO/pruebas. No usar en producción.
+        // Para producción, reemplaza con tu propia key restringida (paquete + SHA-1).
         ?: "AIzaSyClBHHafZwcAr0LzXG22AemLhq9JUXdCaU")
 
 android {
