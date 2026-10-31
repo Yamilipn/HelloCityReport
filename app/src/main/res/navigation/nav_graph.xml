@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_lista_to_nueva"
             app:destination="@id/nuevaIncidenciaFragment" />
+        <action
+            android:id="@+id/action_lista_to_reporte"
+            app:destination="@id/reporteIncidenciaFragment" />
     </fragment>
 
     <fragment
@@ -34,6 +37,17 @@
         <argument
             android:name="incidenciaId"
             app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reporteIncidenciaFragment"
+        android:name="com.example.hellocityreport.ui.ReporteIncidenciaFragment"
+        android:label="@string/reporte_titulo">
+        <action
+            android:id="@+id/action_reporte_to_lista"
+            app:destination="@id/listaIncidenciasFragment"
+            app:popUpTo="@id/listaIncidenciasFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

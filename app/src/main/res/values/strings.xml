@@ -19,6 +19,18 @@
     <string name="title_detalle">Detalle</string>
     <string name="bottom_lista">Inicio</string>
     <string name="bottom_nueva">Reportar</string>
+    <string name="bottom_reportar">Reportar</string>
+
+    <string name="reporte_titulo">Reportar incidencia</string>
+    <string name="seccion_ubicacion">Ubicación (mapa)</string>
+    <string name="seccion_foto">Evidencia (foto)</string>
+    <string name="btn_mi_ubicacion">Mi ubicación</string>
+    <string name="btn_capturar">Capturar foto</string>
+    <string name="ubicacion_sin_obtener">Ubicación no obtenida</string>
+    <string name="mi_ubicacion">Mi ubicación</string>
+    <string name="permiso_ubicacion_denegado">Permiso de ubicación denegado</string>
+    <string name="permiso_camara_denegado">Permiso de cámara denegado</string>
+    <string name="error_foto_requerida">Se requiere una foto de evidencia</string>
 
     <string-array name="estados_incidencia">
         <item>Pendiente</item>

@@ -8,6 +8,8 @@ import com.example.hellocityreport.mvp.lista.ListaContract
 import com.example.hellocityreport.mvp.lista.ListaPresenter
 import com.example.hellocityreport.mvp.nueva.NuevaContract
 import com.example.hellocityreport.mvp.nueva.NuevaPresenter
+import com.example.hellocityreport.mvp.reporte.ReporteContract
+import com.example.hellocityreport.mvp.reporte.ReportePresenter
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -27,9 +29,12 @@ private class FakeRepository : IncidenciaRepository {
         descripcion: String,
         ubicacion: String,
         fecha: String,
-        estado: String
+        estado: String,
+        latitud: Double?,
+        longitud: Double?,
+        fotoUri: String?
     ): Incidencia {
-        val nueva = Incidencia(3, titulo, descripcion, ubicacion, fecha, estado)
+        val nueva = Incidencia(3, titulo, descripcion, ubicacion, fecha, estado, latitud, longitud, fotoUri)
         items.add(0, nueva)
         return nueva
     }
@@ -49,6 +54,7 @@ class ListaPresenterTest {
 
             override fun navigateToDetalle(id: Int) = Unit
             override fun navigateToNueva() = Unit
+            override fun navigateToReporte() = Unit
         }
         presenter.attach(view)
         presenter.onViewReady()
@@ -66,6 +72,7 @@ class ListaPresenterTest {
             }
 
             override fun navigateToNueva() = Unit
+            override fun navigateToReporte() = Unit
         }
         presenter.attach(view)
         presenter.onIncidenciaClicked(2)
@@ -175,5 +182,76 @@ class NuevaPresenterTest {
         assertTrue(view.creada)
         assertTrue(view.cerrada)
         assertEquals(3, repo.getAll().size)
+    }
+}
+
+class ReportePresenterTest {
+
+    private class ViewRecorder : ReporteContract.View {
+        var guardado = false
+        var cerrado = false
+        var guardadoHabilitado = false
+        override fun showFechaInicial(fecha: String) = Unit
+        override fun showEstados(estados: List<String>, seleccionado: String) = Unit
+        override fun showUbicacion(lat: Double, lng: Double) = Unit
+        override fun showUbicacionTexto(texto: String) = Unit
+        override fun showFoto(uri: String) = Unit
+        override fun showTituloError(message: String) = Unit
+        override fun showUbicacionError(message: String) = Unit
+        override fun showCreada() { guardado = true }
+        override fun close() { cerrado = true }
+        override fun enableGuardar(enabled: Boolean) { guardadoHabilitado = enabled }
+        override fun requestLocationPermission() = Unit
+        override fun requestCameraPermission() = Unit
+        override fun startLocationUpdates() = Unit
+        override fun startCameraCapture() = Unit
+    }
+
+    @Test
+    fun onInit_deshabilitaGuardar() {
+        val presenter = ReportePresenter(FakeRepository())
+        val view = ViewRecorder()
+        presenter.attach(view)
+        presenter.onInit("2026-09-16", "Pendiente", listOf("Pendiente"))
+        org.junit.Assert.assertFalse(view.guardadoHabilitado)
+    }
+
+    @Test
+    fun ubicacionYFoto_habilitanGuardar() {
+        val presenter = ReportePresenter(FakeRepository())
+        val view = ViewRecorder()
+        presenter.attach(view)
+        presenter.onInit("2026-09-16", "Pendiente", listOf("Pendiente"))
+        presenter.onUbicacionObtenida(19.43, -99.13)
+        presenter.onFotoCapturada("file:///tmp/foto.jpg")
+        org.junit.Assert.assertTrue(view.guardadoHabilitado)
+    }
+
+    @Test
+    fun onGuardar_valido_guardaYCierra() {
+        val repo = FakeRepository()
+        val presenter = ReportePresenter(repo)
+        val view = ViewRecorder()
+        presenter.attach(view)
+        presenter.onInit("2026-09-16", "Pendiente", listOf("Pendiente"))
+        presenter.onUbicacionObtenida(19.43, -99.13)
+        presenter.onFotoCapturada("file:///tmp/foto.jpg")
+        presenter.onGuardar(
+            titulo = "Bache",
+            descripcion = "",
+            ubicacion = "Av. X",
+            fecha = "",
+            estado = "",
+            tituloErrorMsg = "req",
+            ubicacionErrorMsg = "req-ubi",
+            descripcionFallback = "Sin descripción",
+            fechaFallback = "2026-09-16",
+            estadoFallback = "Pendiente",
+            sinUbicacionMsg = "sin-ubi",
+            sinFotoMsg = "sin-foto"
+        )
+        org.junit.Assert.assertTrue(view.guardado)
+        org.junit.Assert.assertTrue(view.cerrado)
+        org.junit.Assert.assertEquals(3, repo.getAll().size)
     }
 }

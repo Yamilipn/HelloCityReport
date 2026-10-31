@@ -9,6 +9,9 @@ package com.example.hellocityreport.model
  * @param ubicacion Lugar donde ocurrió la incidencia.
  * @param fecha Fecha del reporte en formato texto (ej. "2026-09-16").
  * @param estado Estado actual: Pendiente, En proceso, Resuelta.
+ * @param latitud Latitud de la ubicación reportada (opcional).
+ * @param longitud Longitud de la ubicación reportada (opcional).
+ * @param fotoUri URI de la foto de evidencia (opcional).
  */
 data class Incidencia(
     val id: Int,
@@ -16,7 +19,10 @@ data class Incidencia(
     val descripcion: String,
     val ubicacion: String,
     val fecha: String,
-    val estado: String
+    val estado: String,
+    val latitud: Double? = null,
+    val longitud: Double? = null,
+    val fotoUri: String? = null
 )
 
 /** Datos de ejemplo para mostrar la lista dinámica mientras no hay backend. */
@@ -42,10 +48,13 @@ object IncidenciasDummy {
         descripcion: String,
         ubicacion: String,
         fecha: String,
-        estado: String
+        estado: String,
+        latitud: Double? = null,
+        longitud: Double? = null,
+        fotoUri: String? = null
     ): Incidencia {
         val nuevoId = (_lista.maxOfOrNull { it.id } ?: 0) + 1
-        val nueva = Incidencia(nuevoId, titulo, descripcion, ubicacion, fecha, estado)
+        val nueva = Incidencia(nuevoId, titulo, descripcion, ubicacion, fecha, estado, latitud, longitud, fotoUri)
         _lista.add(0, nueva)
         return nueva
     }

@@ -15,7 +15,10 @@ interface IncidenciaRepository {
         descripcion: String,
         ubicacion: String,
         fecha: String,
-        estado: String
+        estado: String,
+        latitud: Double? = null,
+        longitud: Double? = null,
+        fotoUri: String? = null
     ): Incidencia
 }
 
@@ -30,12 +33,18 @@ class IncidenciaRepositoryImpl : IncidenciaRepository {
         descripcion: String,
         ubicacion: String,
         fecha: String,
-        estado: String
+        estado: String,
+        latitud: Double?,
+        longitud: Double?,
+        fotoUri: String?
     ): Incidencia = IncidenciasDummy.agregar(
         titulo = titulo,
         descripcion = descripcion,
         ubicacion = ubicacion,
         fecha = fecha,
-        estado = estado
+        estado = estado,
+        latitud = latitud,
+        longitud = longitud,
+        fotoUri = fotoUri
     )
 }

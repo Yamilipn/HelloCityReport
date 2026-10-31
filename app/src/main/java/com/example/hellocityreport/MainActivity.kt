@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         // Destinos top-level: no muestran Up y están en el BottomNav.
         val topLevel = setOf(
             R.id.listaIncidenciasFragment,
-            R.id.nuevaIncidenciaFragment
+            R.id.reporteIncidenciaFragment
         )
         val appBarConfig = AppBarConfiguration(topLevel)
 

@@ -6,7 +6,7 @@
         android:icon="@android:drawable/ic_menu_view"
         android:title="@string/bottom_lista" />
     <item
-        android:id="@+id/nuevaIncidenciaFragment"
+        android:id="@+id/reporteIncidenciaFragment"
         android:icon="@android:drawable/ic_input_add"
-        android:title="@string/bottom_nueva" />
+        android:title="@string/bottom_reportar" />
 </menu>

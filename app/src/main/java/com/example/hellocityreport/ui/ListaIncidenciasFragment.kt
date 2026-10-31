@@ -43,7 +43,7 @@ class ListaIncidenciasFragment : Fragment(), ListaContract.View {
         recycler.adapter = adapter
 
         view.findViewById<View>(R.id.fabNueva).setOnClickListener {
-            presenter.onNuevaClicked()
+            presenter.onReporteClicked()
         }
 
         presenter.onViewReady()
@@ -74,5 +74,9 @@ class ListaIncidenciasFragment : Fragment(), ListaContract.View {
 
     override fun navigateToNueva() {
         findNavController().navigate(R.id.action_lista_to_nueva)
+    }
+
+    override fun navigateToReporte() {
+        findNavController().navigate(R.id.action_lista_to_reporte)
     }
 }

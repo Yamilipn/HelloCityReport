@@ -12,6 +12,7 @@ interface ListaContract {
         fun showIncidencias(items: List<Incidencia>)
         fun navigateToDetalle(id: Int)
         fun navigateToNueva()
+        fun navigateToReporte()
     }
 
     interface Presenter {
@@ -21,5 +22,6 @@ interface ListaContract {
         fun onResume()
         fun onIncidenciaClicked(id: Int)
         fun onNuevaClicked()
+        fun onReporteClicked()
     }
 }

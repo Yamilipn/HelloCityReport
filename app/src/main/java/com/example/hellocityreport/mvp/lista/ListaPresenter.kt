@@ -36,4 +36,8 @@ class ListaPresenter(
     override fun onNuevaClicked() {
         view?.navigateToNueva()
     }
+
+    override fun onReporteClicked() {
+        view?.navigateToReporte()
+    }
 }
