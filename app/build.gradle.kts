@@ -5,13 +5,13 @@ plugins {
 
 // Lee la API key de Google Maps desde variable de entorno o local.properties (gitignored).
 val mapsApiKey: String =
-    (System.getenv("MAPS_API_KEY")
-        ?: project.findProperty("MAPS_API_KEY") as String?
+    (System.getenv("MAPS_API_KEY")?.takeIf { it.isNotBlank() }
+        ?: (project.findProperty("MAPS_API_KEY") as String?)?.takeIf { it.isNotBlank() }
         ?: run {
             val lp = rootProject.file("local.properties")
             if (lp.exists()) {
                 lp.readLines().firstOrNull { it.startsWith("MAPS_API_KEY=") }
-                    ?.substringAfter("=")?.trim()
+                    ?.substringAfter("=")?.trim()?.takeIf { it.isNotBlank() }
             } else null
         }
         ?: "YOUR_GOOGLE_MAPS_API_KEY")
