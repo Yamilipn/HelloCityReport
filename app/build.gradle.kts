@@ -14,7 +14,7 @@ val mapsApiKey: String =
                     ?.substringAfter("=")?.trim()?.takeIf { it.isNotBlank() }
             } else null
         }
-        ?: "YOUR_GOOGLE_MAPS_API_KEY")
+        ?: "AIzaSyClBHHafZwcAr0LzXG22AemLhq9JUXdCaU")
 
 android {
     namespace = "com.example.hellocityreport"
