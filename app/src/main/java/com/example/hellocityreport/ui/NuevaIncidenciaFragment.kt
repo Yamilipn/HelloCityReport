@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.hellocityreport.R
 import com.example.hellocityreport.data.IncidenciaRepositoryImpl
 import com.example.hellocityreport.mvp.nueva.NuevaContract
+import com.example.hellocityreport.notifications.NotificationHelper
 import com.example.hellocityreport.mvp.nueva.NuevaPresenter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -115,6 +116,10 @@ class NuevaIncidenciaFragment : Fragment(), NuevaContract.View {
     override fun showCreada() {
         Toast.makeText(requireContext(), getString(R.string.incidencia_creada), Toast.LENGTH_SHORT)
             .show()
+        NotificationHelper.showIncidenciaCreada(
+            requireContext(),
+            inputTitulo?.text?.toString().orEmpty()
+        )
     }
 
     override fun close() {

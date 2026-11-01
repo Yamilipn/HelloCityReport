@@ -26,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.hellocityreport.R
 import com.example.hellocityreport.data.IncidenciaRepositoryImpl
 import com.example.hellocityreport.mvp.reporte.ReporteContract
+import com.example.hellocityreport.notifications.NotificationHelper
 import com.example.hellocityreport.mvp.reporte.ReportePresenter
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -235,6 +236,10 @@ class ReporteIncidenciaFragment : Fragment(), ReporteContract.View, OnMapReadyCa
 
     override fun showCreada() {
         Toast.makeText(requireContext(), getString(R.string.incidencia_creada), Toast.LENGTH_SHORT).show()
+        NotificationHelper.showIncidenciaCreada(
+            requireContext(),
+            inputTitulo?.text?.toString().orEmpty()
+        )
     }
 
     override fun close() {
