@@ -50,6 +50,7 @@ erDiagram
         string ubicacion
         float latitud
         float longitud
+        string foto_uri
         datetime fecha_reporte
         string estado
         int id_usuario FK
@@ -95,6 +96,7 @@ erDiagram
 | `ubicacion` | VARCHAR(200) | NOT NULL | Dirección o referencia textual. |
 | `latitud` | FLOAT | NULL | Coordenada geográfica. |
 | `longitud` | FLOAT | NULL | Coordenada geográfica. |
+| `foto_uri` | VARCHAR(500) | NULL | URI de la foto de evidencia (opcional). |
 | `fecha_reporte` | DATETIME | NOT NULL | Fecha y hora del reporte. |
 | `estado` | VARCHAR(30) | NOT NULL | Pendiente, En proceso, Resuelta. |
 | `id_usuario` | INT | FK → Usuario.id_usuario | Usuario que reporta. |
