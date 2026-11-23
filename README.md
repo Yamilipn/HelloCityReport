@@ -1,3 +1,4 @@
+successfully downloaded text file (SHA: edd4f8b04bbec3c6299e65a0a3781d5dd57911b3)
 # HelloCityReport
 
 App Android (Kotlin) para reportar incidencias urbanas (baches, alumbrado, fugas, etc.).
@@ -44,7 +45,7 @@ Arquitectura **MVP + Material 3**, con colores dinámicos (Material You).
 6. Despliega las reglas con `firebase deploy --only firestore:rules,storage` (requiere Firebase CLI y `firebase login`).
 
 ### Reglas y emuladores
-- `firestore.rules': solo usuarios autenticados; cada incidencia puede ser escrita/borrada únicamente por su autor.
+- `firestore.rules`: solo usuarios autenticados; cada incidencia puede ser escrita/borrada únicamente por su autor.
 - `storage.rules`: fotos de hasta 5 MB, tipo `image/*`, solo con sesión.
 - `firebase.json` + `.firebaserc`: configuración del Local Emulator Suite (proyecto `demo-hellocityreport`). Arranca con `firebase emulators:start` para probar sin datos reales.
 
