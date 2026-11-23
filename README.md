@@ -41,6 +41,12 @@ Arquitectura **MVP + Material 3**, con colores dinámicos (Material You).
 4. Copia `app/google-services.json.example` como `app/google-services.json` y sustituye los valores por los de tu proyecto. El archivo real está en `.gitignore`; **nunca lo subas**.
    - Es importante volver a descargar el JSON **después** de activar Google: así incluye el `oauth_client` tipo 3 que genera `R.string.default_web_client_id`.
 5. Sincroniza Gradle y ejecuta la app en un dispositivo con Google Play Services.
+6. Despliega las reglas con `firebase deploy --only firestore:rules,storage` (requiere Firebase CLI y `firebase login`).
+
+### Reglas y emuladores
+- `firestore.rules': solo usuarios autenticados; cada incidencia puede ser escrita/borrada únicamente por su autor.
+- `storage.rules`: fotos de hasta 5 MB, tipo `image/*`, solo con sesión.
+- `firebase.json` + `.firebaserc`: configuración del Local Emulator Suite (proyecto `demo-hellocityreport`). Arranca con `firebase emulators:start` para probar sin datos reales.
 
 Documentación detallada:
 - `docs/firebase_kotlin_firestore_auth_storage.md` — Firestore, Auth y Storage en Kotlin.
