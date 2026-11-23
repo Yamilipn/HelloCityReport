@@ -23,8 +23,8 @@ data class IncidenciaFirestore(
  * Se usa `await()` (kotlinx-coroutines-play-services) en lugar de listeners anidados.
  */
 class IncidenciaRepository(
-    private val db = FirebaseModule.firestore,
-    private val storage = FirebaseModule.storage,
+    private val db: FirebaseFirestore = FirebaseModule.firestore,
+    private val storage: FirebaseStorage = FirebaseModule.storage,
 ) {
 
     private val incidencias = db.collection("incidencias")
