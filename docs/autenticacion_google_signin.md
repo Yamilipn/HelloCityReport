@@ -85,7 +85,7 @@ sequenceDiagram
    >
    > Si `keytool` muestra `MissingFormatArgumentException`, ejecútalo con `$env:JAVA_TOOL_OPTIONS = "-Duser.language=en -Duser.country=US"` (bug de localización) o usa el *Signing Report* de Android Studio.
 4. **Habilitar Google** en *Firebase Console → Authentication → Sign-in method → Google → Enable → Save*. Elegir el email de soporte del proyecto.
-5. **Descargar de nuevo `google-services.json`** y reemplazar el anterior: ahora contendrá el `oauth_client` de tipo web. Sin ese bloque, la compilación falla porque no existe `R.string.default_web_client_id`.
+5. **Descargar de nuevo `google-services.json`** y reemplazar el anterior: ahora contendrá el `oauth_client` de tipo web. Sin ese bloque, la compilación falla porque no existe `R.string.default_web_client_id`. En esta rama ya está incluido el JSON del proyecto `hellocityreport-test` con el cliente web (tipo 3) y el SHA-1 de depuración registrados.
 6. Verificar en *Google Cloud Console → APIs & Services → Credentials* que existe un client ID de tipo **Web application**; su valor es el `serverClientId`.
 
 ---
