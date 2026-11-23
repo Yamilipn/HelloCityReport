@@ -38,7 +38,7 @@ Arquitectura **MVP + Material 3**, con colores dinámicos (Material You).
 1. Crea un proyecto en [Firebase Console](https://console.firebase.google.com/) y registra el paquete `com.example.hellocityreport`.
 2. Registra el **SHA-1** de debug y release en *Project settings → General*.
 3. Activa los productos: **Authentication** (proveedor Google), **Cloud Firestore** y **Cloud Storage** (plan Blaze).
-4. Copia `app/google-services.json.example` como `app/google-services.json` y sustituye los valores por los de tu proyecto. El archivo real está en `.gitignore`; **nunca lo subas**.
+4. El proyecto de pruebas `hellocityreport-test` ya está registrado y su `app/google-services.json` está incluido en esta rama (según Firebase, contiene identificadores **no secretos**). Incluye el `oauth_client` tipo 3 que genera `R.string.default_web_client_id` y el SHA-1 de depuración. Si creas otro proyecto, descarga su JSON y reemplaza este archivo.
    - Es importante volver a descargar el JSON **después** de activar Google: así incluye el `oauth_client` tipo 3 que genera `R.string.default_web_client_id`.
 5. Sincroniza Gradle y ejecuta la app en un dispositivo con Google Play Services.
 6. Despliega las reglas con `firebase deploy --only firestore:rules,storage` (requiere Firebase CLI y `firebase login`).
