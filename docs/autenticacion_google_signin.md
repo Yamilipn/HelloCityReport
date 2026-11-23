@@ -79,6 +79,11 @@ sequenceDiagram
    keytool -list -v -keystore "$env:USERPROFILE\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
    ```
    También está el *Signing Report* en Android Studio (▶ Gradle → `app:tasks → signingReport`). El SHA-1 de debug y el de release deben registrarse.
+
+   > **SHA-1 de depuración ya calculado para este equipo** (keystore `%USERPROFILE%\.android\debug.keystore`, alias `androiddebugkey`):
+   > `88:2D:BE:BC:80:AD:C3:5E:AD:5B:1C:B0:83:F9:F1:B2:30:70:A9:5B`
+   >
+   > Si `keytool` muestra `MissingFormatArgumentException`, ejecútalo con `$env:JAVA_TOOL_OPTIONS = "-Duser.language=en -Duser.country=US"` (bug de localización) o usa el *Signing Report* de Android Studio.
 4. **Habilitar Google** en *Firebase Console → Authentication → Sign-in method → Google → Enable → Save*. Elegir el email de soporte del proyecto.
 5. **Descargar de nuevo `google-services.json`** y reemplazar el anterior: ahora contendrá el `oauth_client` de tipo web. Sin ese bloque, la compilación falla porque no existe `R.string.default_web_client_id`.
 6. Verificar en *Google Cloud Console → APIs & Services → Credentials* que existe un client ID de tipo **Web application**; su valor es el `serverClientId`.
