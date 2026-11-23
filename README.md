@@ -43,6 +43,14 @@ Arquitectura **MVP + Material 3**, con colores dinámicos (Material You).
 5. Sincroniza Gradle y ejecuta la app en un dispositivo con Google Play Services.
 6. Despliega las reglas con `firebase deploy --only firestore:rules,storage` (requiere Firebase CLI y `firebase login`).
 
+### Estado del proyecto de pruebas
+- Proyecto: **hellocityreport-test** (ID `999170813120`).
+- App Android registrada: `com.example.hellocityreport`; SHA-1 de depuración `88:2D:BE:BC:80:AD:C3:5E:AD:5B:1C:B0:83:F9:F1:B2:30:70:A9:5B`.
+- Authentication: proveedor **Google habilitado**.
+- Firestore: base `(default)` creada en `nam5` con las reglas de `firestore.rules` publicadas.
+- Compilación verificada: `./gradlew assembleDebug` → BUILD SUCCESSFUL.
+- **Pendiente:** Storage requiere vincular una cuenta de facturación (plan Blaze) y crear el bucket; después publicar `storage.rules`.
+
 ### Reglas y emuladores
 - `firestore.rules`: solo usuarios autenticados; cada incidencia puede ser escrita/borrada únicamente por su autor.
 - `storage.rules`: fotos de hasta 5 MB, tipo `image/*`, solo con sesión.
