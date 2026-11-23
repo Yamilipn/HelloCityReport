@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "999170813120",
+    "project_id": "hellocityreport-test",
+    "storage_bucket": "hellocityreport-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999170813120:android:7e232a1c29e7956d4ed125",
+        "android_client_info": {
+          "package_name": "com.example.hellocityreport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999170813120-k7po6b9jb8meiflv1m2o5annvunojfhp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hellocityreport",
+            "certificate_hash": "882dbebc80adc35ead5b1cb083f9f1b23070a95b"
+          }
+        },
+        {
+          "client_id": "999170813120-0b9gecm78hcst9obp0mpqeu87h7sjb23.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF2x93JtKwIQ8S2hpbso5CjOncB5sWvc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999170813120-0b9gecm78hcst9obp0mpqeu87h7sjb23.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

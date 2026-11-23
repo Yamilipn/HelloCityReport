@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(ownerUid) {
+      return isSignedIn() && request.auth.uid == ownerUid;
+    }
+
+    // Perfil del usuario: solo lo lee el propio usuario y los usuarios autenticados.
+    match /usuarios/{uid} {
+      allow read: if isSignedIn();
+      allow create, update: if isOwner(uid);
+      allow delete: if false;
+    }
+
+    // Incidencias: cualquiera con sesion puede leer; solo el autor escribe.
+    match /incidencias/{incidenciaId} {
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn()
+                    && request.resource.data.keys().hasAll([
+                         'titulo', 'descripcion', 'categoria',
+                         'latitud', 'longitud', 'creadoPor'
+                       ])
+                    && request.resource.data.titulo is string
+                    && request.resource.data.descripcion is string
+                    && request.resource.data.categoria is string
+                    && request.resource.data.creadoPor == request.auth.uid;
+
+      allow update: if isOwner(resource.data.creadoPor)
+                    && request.resource.data.creadoPor == resource.data.creadoPor;
+
+      allow delete: if isOwner(resource.data.creadoPor);
+    }
+  }
+}
