@@ -52,7 +52,7 @@ class IncidenciaRepository(
     suspend fun listar(categoria: String? = null, limite: Int = 20): List<IncidenciaFirestore> {
         var query = incidencias.orderBy("creadoEn")
         if (categoria != null) query = query.whereEqualTo("categoria", categoria)
-        return query.limit(limite).get().await().toObjects(IncidenciaFirestore::class.java)
+        return query.limit(limite.toLong()).get().await().toObjects(IncidenciaFirestore::class.java)
     }
 
     /** Obtiene una incidencia por ID; null si no existe. */
