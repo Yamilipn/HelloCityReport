@@ -43,7 +43,7 @@ Consulté la documentación oficial de Firebase en `firebase.google.com/docs` (v
 |---|---|---|
 | 1 | **Información contradictoria**: muchos tutoriales seguían usando `firebase-auth-ktx` y `GoogleSignInClient` | Contrasté con la guía oficial de migración y con la página actual de Google Sign-In; adopté módulos principales y Credential Manager |
 | 2 | **Elegir versión del BoM** compatible con AGP 9.3.2 / compileSdk 37 | Usé el BoM 35.2.0 documentado y dejé que él controlara las versiones de cada SDK |
-| 3 | **`google-services.json` real no disponible** al inicio (requería proyecto Firebase y permisos de Console) | Se creó el proyecto `hellocityreport-test` desde la consola con la sesión del integrante, se registraron paquete, SHA-1 y proveedor Google, y se descargó el JSON real; se mantiene además la plantilla `.example` como referencia |
+| 3 | **`google-services.json` real no disponible** al inicio (requería proyecto Firebase y permisos de Console) | Se creó el proyecto `hellocityreport-test` desde la consola, se registraron paquete, SHA-1 y proveedor Google y se descargó el JSON. Como el repo es público, el archivo real se deja fuera de Git y solo se versiona la plantilla `.example` |
 | 4 | **No subir secretos al repo** | El JSON real se ignora; la plantilla lleva valores de ejemplo (`REEMPLAZA_CON...`). El token MCP tampoco permite secret scanning sobre el archivo real porque no existe localmente |
 | 5 | **SHA-1 del certificado** | Documenté `keytool` y *signingReport* de Android Studio; recordé registrar tanto debug como release |
 | 6 | **`R.string.default_web_client_id`** no existe si el JSON no tiene OAuth web | Documenté que hay que volver a descargar el JSON **después** de habilitar el proveedor Google; es el error de compilación más frecuente |
@@ -65,14 +65,14 @@ Consulté la documentación oficial de Firebase en `firebase.google.com/docs` (v
 - SHA-1 de depuración registrado: `88:2D:BE:BC:80:AD:C3:5E:AD:5B:1C:B0:83:F9:F1:B2:30:70:A9:5B`.
 - Authentication con proveedor **Google habilitado** y correo de asistencia configurado.
 - Cloud Firestore creado (edición Standard, ubicación `nam5`, modo producción) con `firestore.rules` publicado.
-- `app/google-services.json` real incluido en la rama (incluye `client_type: 3`).
+- `app/google-services.json` descargado del proyecto de pruebas, conservado solo en local por ser un repo público (incluye `client_type: 3`).
 - Compilación verificada: `./gradlew assembleDebug` → **BUILD SUCCESSFUL** (APK generado).
 
 **Archivos preparados en la rama `test/firebase-or`:**
 
 - `gradle/libs.versions.toml`: BoM 35.2.0, plugin `google-services`, Firestore/Auth/Storage, Credentials, Google ID, coroutines y Kotlin 2.4.0.
 - `build.gradle.kts` / `app/build.gradle.kts`: plugin y dependencias aplicados.
-- `app/google-services.json` + `app/google-services.json.example`: configuración real y plantilla de referencia.
+- `app/google-services.json.example`: plantilla de referencia. El JSON real se ignora en Git y cada integrante lo descarga de la consola.
 - `app/src/main/java/com/example/hellocityreport/firebase/`: `FirebaseModule.kt`, `IncidenciaRepository.kt`, `GoogleSignInManager.kt`.
 - `firestore.rules`, `storage.rules`, `firebase.json`, `.firebaserc`: reglas y emuladores.
 - `docs/firebase_kotlin_firestore_auth_storage.md`, `docs/autenticacion_google_signin.md`, este reporte y el README.
