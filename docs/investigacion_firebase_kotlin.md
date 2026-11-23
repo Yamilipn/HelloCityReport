@@ -50,28 +50,37 @@ Consulté la documentación oficial de Firebase en `firebase.google.com/docs` (v
 | 7 | **Distinguir client ID Web vs Android** | Aclaré en la guía que `setServerClientId` usa el de tipo *Web application* (`client_type: 3`), no el de Android (`client_type: 1`) |
 | 8 | **Manejo de coroutines sobre `Task`** | Añadí `kotlinx-coroutines-play-services` y usé `await()` + `runCatching` en lugar de listeners anidados |
 | 9 | **Acceso de escritura a GitHub via MCP** | El token configurado devolvió `403 Resource not accessible by personal access token` al crear rama/archivos (permiso `Contents: write` ausente). Preparé todos los entregables localmente y solicité habilitar ese permiso para subirlos a `test/firebase-or` |
+| 10 | **Incompatibilidad de Kotlin**: `firebase-auth-25.0.0` tiene metadata 2.4.0 y el proyecto usaba 2.2.10 | Subí el plugin de Kotlin a `2.4.0` en el catálogo de versiones; desaparecieron los `Unresolved reference 'auth'`, `collection`, `toObject`, `reference`, etc. |
+| 11 | **Parámetros del constructor sin tipo** en `IncidenciaRepository` | Kotlin exige tipos explícitos: `private val db: FirebaseFirestore = ...` y `private val storage: FirebaseStorage = ...` |
+| 12 | **`Query.limit()` espera `Long`**, no `Int` | Cambié `limit(limite)` por `limit(limite.toLong())`. Con esto `./gradlew assembleDebug` terminó en **BUILD SUCCESSFUL** |
+| 13 | **Storage exige plan Blaze** y no hay cuenta de facturación | Se dejó Storage pendiente a la espera de que el integrante cree/vincule una cuenta de facturación; el código, `storage.rules` y el bucket previsto quedaron documentados |
 
 ---
 
 ## 4. Estado de la integración en la rama
 
-**Archivos preparados para la rama `test/firebase-or`:**
+**Estado real (verificado en consola y con Gradle):**
 
-- `gradle/libs.versions.toml`: BoM, plugin `google-services`, Firestore/Auth/Storage, Credentials, Google ID y coroutines.
-- `build.gradle.kts`: plugin `google-services` (`apply false`).
-- `app/build.gradle.kts`: plugin aplicado + dependencias Firebase y Google Sign-In.
-- `app/.gitignore`: ignora `google-services.json`.
-- `app/google-services.json.example`: plantilla segura del archivo de configuración.
-- `app/src/main/java/com/example/hellocityreport/firebase/FirebaseModule.kt`: instancias `auth`, `firestore`, `storage`.
-- `app/src/main/java/com/example/hellocityreport/firebase/IncidenciaRepository.kt`: CRUD y subida de fotos con coroutines.
-- `app/src/main/java/com/example/hellocityreport/firebase/GoogleSignInManager.kt`: flujo completo de Credential Manager + Firebase.
-- `docs/firebase_kotlin_firestore_auth_storage.md`, `docs/autenticacion_google_signin.md`, este reporte y el README actualizado.
+- Proyecto Firebase: `hellocityreport-test` (ID `999170813120`), app Android `com.example.hellocityreport` (ID `1:999170813120:android:7e232a1c29e7956d4ed125`).
+- SHA-1 de depuración registrado: `88:2D:BE:BC:80:AD:C3:5E:AD:5B:1C:B0:83:F9:F1:B2:30:70:A9:5B`.
+- Authentication con proveedor **Google habilitado** y correo de asistencia configurado.
+- Cloud Firestore creado (edición Standard, ubicación `nam5`, modo producción) con `firestore.rules` publicado.
+- `app/google-services.json` real incluido en la rama (incluye `client_type: 3`).
+- Compilación verificada: `./gradlew assembleDebug` → **BUILD SUCCESSFUL** (APK generado).
 
-**Pendiente del equipo (requiere credenciales reales):**
-1. Crear el proyecto Firebase y registrar `com.example.hellocityreport`.
-2. Añadir SHA-1 de debug/release, habilitar Google, descargar `google-services.json` y copiarlo en `app/`.
-3. Crear la base Firestore y el bucket Storage; reemplazar las reglas de prueba por las definitivas.
-4. Ejecutar `./gradlew assembleDebug` y probar el flujo en emulador con Google Play Services.
+**Archivos preparados en la rama `test/firebase-or`:**
+
+- `gradle/libs.versions.toml`: BoM 35.2.0, plugin `google-services`, Firestore/Auth/Storage, Credentials, Google ID, coroutines y Kotlin 2.4.0.
+- `build.gradle.kts` / `app/build.gradle.kts`: plugin y dependencias aplicados.
+- `app/google-services.json` + `app/google-services.json.example`: configuración real y plantilla de referencia.
+- `app/src/main/java/com/example/hellocityreport/firebase/`: `FirebaseModule.kt`, `IncidenciaRepository.kt`, `GoogleSignInManager.kt`.
+- `firestore.rules`, `storage.rules`, `firebase.json`, `.firebaserc`: reglas y emuladores.
+- `docs/firebase_kotlin_firestore_auth_storage.md`, `docs/autenticacion_google_signin.md`, este reporte y el README.
+
+**Pendiente:**
+1. Crear/vincular una cuenta de facturación (Blaze) y pulsar *Comenzar* en Storage para crear el bucket; luego publicar `storage.rules`.
+2. Registrar el SHA-1 de release cuando se genere el keystore de producción.
+3. Probar el flujo de login y subida de fotos en un dispositivo con Google Play Services.
 
 ---
 
