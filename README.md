@@ -1,4 +1,3 @@
-successfully downloaded text file (SHA: edd4f8b04bbec3c6299e65a0a3781d5dd57911b3)
 # HelloCityReport
 
 App Android (Kotlin) para reportar incidencias urbanas (baches, alumbrado, fugas, etc.).
