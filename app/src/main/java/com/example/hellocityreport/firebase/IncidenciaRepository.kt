@@ -2,6 +2,8 @@ package com.example.hellocityreport.firebase
 
 import android.net.Uri
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
 /**
