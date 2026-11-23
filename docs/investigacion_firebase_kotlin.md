@@ -43,7 +43,7 @@ Consulté la documentación oficial de Firebase en `firebase.google.com/docs` (v
 |---|---|---|
 | 1 | **Información contradictoria**: muchos tutoriales seguían usando `firebase-auth-ktx` y `GoogleSignInClient` | Contrasté con la guía oficial de migración y con la página actual de Google Sign-In; adopté módulos principales y Credential Manager |
 | 2 | **Elegir versión del BoM** compatible con AGP 9.3.2 / compileSdk 37 | Usé el BoM 35.2.0 documentado y dejé que él controlara las versiones de cada SDK |
-| 3 | **`google-services.json` real no disponible** (requiere proyecto Firebase y permisos de Console) | Creé `app/google-services.json.example` con la estructura correcta (incluido `client_type: 3`) y añadí `/google-services.json` a `.gitignore`; el equipo solo debe descargar su archivo y copiarlo |
+| 3 | **`google-services.json` real no disponible** al inicio (requería proyecto Firebase y permisos de Console) | Se creó el proyecto `hellocityreport-test` desde la consola con la sesión del integrante, se registraron paquete, SHA-1 y proveedor Google, y se descargó el JSON real; se mantiene además la plantilla `.example` como referencia |
 | 4 | **No subir secretos al repo** | El JSON real se ignora; la plantilla lleva valores de ejemplo (`REEMPLAZA_CON...`). El token MCP tampoco permite secret scanning sobre el archivo real porque no existe localmente |
 | 5 | **SHA-1 del certificado** | Documenté `keytool` y *signingReport* de Android Studio; recordé registrar tanto debug como release |
 | 6 | **`R.string.default_web_client_id`** no existe si el JSON no tiene OAuth web | Documenté que hay que volver a descargar el JSON **después** de habilitar el proveedor Google; es el error de compilación más frecuente |
